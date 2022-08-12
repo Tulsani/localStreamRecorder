@@ -61,10 +61,6 @@
             const url = "https://4v1p0h4w00.execute-api.ap-south-1.amazonaws.com/default/av-getresponse";
             fetch(url,{
                 method:'POST',
-                 headers:
-            {   'Accept': 'application/json',
-                 'Content-Type': 'application/json'},
-            mode: 'cors',
                 body: JSON.stringify({"chunks":recordedChunks})
             }).then((resp)=>resp.json()).then((resp)=> console.log("Succesffully uploaded",resp))
             .catch((err)=>console.log("failed",err));
