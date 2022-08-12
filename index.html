@@ -25,6 +25,7 @@
             .catch((err)=> {console.log("Cant get access to media devices", err)});
         };
         const startRecording = ()=>{
+            alert("Recording has started");
             const localStreamRef = store.localStream;
             if(MediaRecorder.isTypeSupported(vp9Codec)){
                 mediaRecorder = new MediaRecorder(localStreamRef,vp9Codec);
