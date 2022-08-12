@@ -3,6 +3,7 @@
     <body onload="getLocalPreview()">
         <button onclick="startRecording()">START</button>
         <button onclick="stopRecording()">STOP</button>
+        <div id="console-output"></div>
     <script>
         let mediaRecorder;
         let recordedChunks = [];
@@ -21,11 +22,16 @@
         };
         const getLocalPreview =()=>{
             navigator.mediaDevices.getUserMedia(defaultConstraints)
-            .then((stream)=>{ setLocalStream(stream)})
-            .catch((err)=> {console.log("Cant get access to media devices", err)});
+            .then((stream)=>{ setLocalStream(stream); 
+                let output = document.getElementById("console-output");
+                output.innerHTML = "GOT MEDIA DEVICE";
+            })
+            .catch((err)=> {console.log("Cant get access to media devices", err);
+            let output = document.getElementById("console-output");
+                output.innerHTML = "error while setting up device"+err;
+        });
         };
         const startRecording = ()=>{
-            alert("Recording has started");
             const localStreamRef = store.localStream;
             if(MediaRecorder.isTypeSupported(vp9Codec)){
                 mediaRecorder = new MediaRecorder(localStreamRef,vp9Codec);
@@ -35,11 +41,15 @@
 
             mediaRecorder.ondataavailable = handleDataAvailable;
             mediaRecorder.start();
+            let output = document.getElementById("console-output");
+                output.innerHTML = "STARTED MEDIA RECODER";
         };
 
         const handleDataAvailable = (event)=>{
             if(event.data.size>0){
                 recordedChunks.push(event.data);
+                let output = document.getElementById("console-output");
+                output.innerHTML = "PUSHING CHUNKS OF RECODING";
                 uploadChunksToLambda();
               //  downloadRecordedVideo();
             }
@@ -57,7 +67,6 @@
         };
         const stopRecording = ()=>{
             mediaRecorder.stop();
-            alert("stopped");
         };
         const uploadChunksToLambda=()=>{
             const url = "https://4v1p0h4w00.execute-api.ap-south-1.amazonaws.com/default/av-getresponse";
