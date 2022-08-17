@@ -40,7 +40,7 @@
             }
 
             mediaRecorder.ondataavailable = handleDataAvailable;
-            mediaRecorder.start();
+            mediaRecorder.start(1000);
             let output = document.getElementById("console-output");
                 output.innerHTML = "STARTED MEDIA RECODER";
         };
