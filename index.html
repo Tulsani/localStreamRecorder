@@ -51,7 +51,7 @@
                 let output = document.getElementById("console-output");
                 output.innerHTML = "PUSHING CHUNKS OF RECODING";
                // uploadChunksToLambda();
-                downloadRecordedVideo();
+                
             }
         };
         const downloadRecordedVideo =()=>{
@@ -67,6 +67,7 @@
         };
         const stopRecording = ()=>{
             mediaRecorder.stop();
+            downloadRecordedVideo();
         };
         const uploadChunksToLambda=()=>{
             const url = "https://4v1p0h4w00.execute-api.ap-south-1.amazonaws.com/default/av-getresponse";
